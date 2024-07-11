@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { ClientPlace } from '@/lib/definitions';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import PlaceSearch from './PlaceSearch';
-import ItineraryModal from '../result/ItineraryModal';
 import useProjectStore from '@/stores/projectStore';
 import useMapStore from '@/stores/mapStore';
 
@@ -11,9 +10,7 @@ const categories = ['숙소', '명소', '식당', '카페', '교통'];
 
 export default function PlaceList({ places }: { places: ClientPlace[] }) {
   const [activeCategory, setActiveCategory] = useState('숙소');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPlace, setSelectedPlace] = useState<ClientPlace | null>(null);
-  const {addMyPlaces } = useProjectStore();
+  const {addMyPlaces} = useProjectStore();
   const { markers, setMarkers } = useMapStore();
 
   const handleAddPlace = (selectPlace: ClientPlace) => {
@@ -57,12 +54,6 @@ export default function PlaceList({ places }: { places: ClientPlace[] }) {
             </li>
           ))}
       </ul>
-      {isModalOpen && selectedPlace && (
-        <ItineraryModal
-          selectPlace={selectedPlace}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
     </div>
   );
 }

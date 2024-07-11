@@ -2,7 +2,8 @@
 import { useState } from 'react'
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { ClientPlace } from '@/lib/definitions';
-import ItineraryModal from '../result/ItineraryModal';
+import useProjectStore from '@/stores/projectStore';
+import useMapStore from '@/stores/mapStore';
 
 interface SearchResult {
   id: string;
@@ -14,9 +15,9 @@ interface SearchResult {
 
 export default function NaverSearchList() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [selectedPlace, setSelectedPlace] = useState<ClientPlace | null>(null);
+  const {addMyPlaces} = useProjectStore();
+  const { markers, setMarkers } = useMapStore();
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -27,8 +28,12 @@ export default function NaverSearchList() {
     setResults(mockResults);
   }
   const handleAddPlace = (selectPlace: ClientPlace) => {
-    setSelectedPlace(selectPlace);
-    setIsModalOpen(true);
+    addMyPlaces(selectPlace);
+    setMarkers([...markers, {
+      position: { lat: selectPlace.position.lat, lng: selectPlace.position.lng },
+      buildingName: selectPlace.name,
+      roadAddress: selectPlace.address,
+    }]);
   };
 
   return (
@@ -66,12 +71,6 @@ export default function NaverSearchList() {
           </li>
         ))}
       </ul>
-      {isModalOpen && selectedPlace && (
-        <ItineraryModal
-          selectPlace={selectedPlace}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
     </div>
   )
 }
