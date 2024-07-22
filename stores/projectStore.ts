@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export interface GuestState {
-  id: number;
+  email: string;
   nickname: string;
   image: string;
 }
