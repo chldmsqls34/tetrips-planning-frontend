@@ -25,17 +25,6 @@ export default function ItineraryPlaceList() {
               onChange={(e) => console.log(e.target.value)}
             />
             <span>시간</span>
-            <input
-              id={place.playTime}
-              type="number"
-              step='10'
-              defaultValue='00'
-              min='00'
-              max='50'
-              className="border rounded-md w-10"
-              onChange={(e) => console.log(e.target.value)}
-            />
-            <span>분</span>
             <button
               className="bg-color11 text-white px-3 py-1 rounded hover:bg-color5"
               onClick={() => handleRemovePlace(place.id)}

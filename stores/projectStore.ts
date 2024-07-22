@@ -1,6 +1,4 @@
-import { Position } from '@/lib/definitions';
 import { create } from 'zustand';
-
 
 export interface GuestState {
   id: number;
@@ -8,52 +6,55 @@ export interface GuestState {
   image: string;
 }
 
-export interface PlaceState {
+export interface DestinationState {
   id: string;
   name: string;
   address: string;
   category: string;
-  position: Position;
-  description?: string;
+  position: {
+    lat: number;
+    lng: number;
+  };
   playTime?: string;
   startPlay?: string;
   endPlay?: string;
+  order?: number;
 }
 
 export interface PlanState {
   date: string;
   startTime: string;
   endTime: string;
-  startPlace: PlaceState | undefined;
-  endPlace: PlaceState | undefined;
+  startPlace: DestinationState | undefined;
+  endPlace: DestinationState | undefined;
+  destinations?: DestinationState[];
 }
 
 interface ProjectState {
   id: string;
-  userId: string;
+  creator: string;
   title: string;
-  startDate: string | undefined; 
-  endDate: string | undefined; 
-  guests: GuestState[];
+  startDate: string; 
+  endDate: string; 
+  guests?: GuestState[];
   plans: PlanState[];
-  myPlaces: PlaceState[];
+  myPlaces: DestinationState[];
   setTitle: (title: string) => void;
   setStartDate: (date: Date) => void;
   setEndDate: (date: Date) => void;
   setPlans: (plans: PlanState[]) => void;
-  updatePlan: (date: string, field: string, value: PlaceState | string) => void;
-  addPlaceToPlan: (date: string, field: 'startPlace' | 'endPlace', place: PlaceState) => void;
-  addMyPlaces: (place: PlaceState) => void;
+  updatePlan: (date: string, field: string, value: DestinationState | string) => void;
+  addMyPlaces: (place: DestinationState) => void;
   removeMyPlaces: (placeId: string) => void;
 }
 
 const useProjectStore = create<ProjectState>()(
   (set) => ({
     id: '',
-    userId: '',
+    creator: '',
     title: '',
-    startDate: undefined,
-    endDate: undefined,
+    startDate: '',
+    endDate: '',
     guests: [],
     plans: [],
     myPlaces: [],
@@ -64,11 +65,6 @@ const useProjectStore = create<ProjectState>()(
     updatePlan: (date, field, value) => set((state) => ({
       plans: state.plans.map((plan) =>
         plan.date === date ? { ...plan, [field]: value } : plan
-      ),
-    })),
-    addPlaceToPlan: (date, field, place) => set((state) => ({
-      plans: state.plans.map((plan) =>
-        plan.date === date ? { ...plan, [field]: place } : plan
       ),
     })),
     addMyPlaces: (place) => set((state) => ({
