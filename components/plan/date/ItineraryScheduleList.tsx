@@ -39,7 +39,7 @@ export default function ItineraryScheduleList() {
                 <label className="block text-sm font-medium text-gray-700">시작 지점</label>
                 <div className='my-1 border p-3'>
                   <p className="text-sm">
-                    {plan.startPlace && `${plan.startPlace.name} (${plan.startPlace.address})`}
+                    {plan.startPlace && `${plan.startPlace.title} (${plan.startPlace.roadAddress})`}
                   </p>
                 </div>
               </div>
@@ -47,7 +47,7 @@ export default function ItineraryScheduleList() {
                 <label className="block text-sm font-medium text-gray-700">종료 지점</label>
                 <div className='my-1 border p-3'>
                   <p className="text-sm">
-                    {plan.endPlace ? `${plan.endPlace.name} (${plan.endPlace.address})` : ''}
+                    {plan.endPlace ? `${plan.endPlace.title} (${plan.endPlace.roadAddress})` : ''}
                   </p>
                 </div>
               </div>

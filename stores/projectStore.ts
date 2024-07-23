@@ -1,34 +1,6 @@
+import { Destination, Guest, Schedule } from '@/lib/definitions';
 import { create } from 'zustand';
 
-export interface GuestState {
-  email: string;
-  nickname: string;
-  image: string;
-}
-
-export interface DestinationState {
-  id: string;
-  name: string;
-  address: string;
-  category: string;
-  position: {
-    lat: number;
-    lng: number;
-  };
-  playTime?: string;
-  startPlay?: string;
-  endPlay?: string;
-  order?: number;
-}
-
-export interface PlanState {
-  date: string;
-  startTime: string;
-  endTime: string;
-  startPlace: DestinationState | undefined;
-  endPlace: DestinationState | undefined;
-  destinations?: DestinationState[];
-}
 
 interface ProjectState {
   id: string;
@@ -36,15 +8,15 @@ interface ProjectState {
   title: string;
   startDate: string; 
   endDate: string; 
-  guests?: GuestState[];
-  plans: PlanState[];
-  myPlaces: DestinationState[];
+  guests?: Guest[];
+  plans: Schedule[];
+  myPlaces: Destination[];
   setTitle: (title: string) => void;
   setStartDate: (date: Date) => void;
   setEndDate: (date: Date) => void;
-  setPlans: (plans: PlanState[]) => void;
-  updatePlan: (date: string, field: string, value: DestinationState | string) => void;
-  addMyPlaces: (place: DestinationState) => void;
+  setPlans: (plans: Schedule[]) => void;
+  updatePlan: (date: string, field: string, value: Destination | string) => void;
+  addMyPlaces: (place: Destination) => void;
   removeMyPlaces: (placeId: string) => void;
 }
 

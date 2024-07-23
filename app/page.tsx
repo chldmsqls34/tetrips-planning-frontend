@@ -32,22 +32,6 @@ export default function Page() {
                 Get started
               </Link>
             </div>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Image
-                src="/hero-desktop.png"
-                width={1000}
-                height={760}
-                alt="Screenshots of the dashboard project showing desktop version"
-                className="hidden md:block"
-              />
-              <Image
-                src="/hero-mobile.png"
-                width={560}
-                height={620}
-                alt="Screenshot of the dashboard project showing mobile version"
-                className="block md:hidden"
-              />
-            </div>
           </div>
         </div>
       </div>

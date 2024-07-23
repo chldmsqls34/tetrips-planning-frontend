@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react';
-import { ClientPlace } from '@/lib/definitions';
+import { ClientPlace, Destination } from '@/lib/definitions';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import PlaceSearch from './PlaceSearch';
-import useProjectStore, { DestinationState } from '@/stores/projectStore';
+import useProjectStore from '@/stores/projectStore';
 import useMapStore from '@/stores/mapStore';
 
 const categories = ['숙소', '명소', '식당', '카페', '교통'];
@@ -13,12 +13,13 @@ export default function PlaceList({ places }: { places: ClientPlace[] }) {
   const {addMyPlaces} = useProjectStore();
   const { markers, setMarkers } = useMapStore();
 
-  const handleAddPlace = (selectPlace: DestinationState) => {
+  const handleAddPlace = (selectPlace: ClientPlace) => {
     addMyPlaces(selectPlace);
     setMarkers([...markers, {
-      position: { lat: selectPlace.position.lat, lng: selectPlace.position.lng },
-      buildingName: selectPlace.name,
-      roadAddress: selectPlace.address,
+      id: selectPlace.title + selectPlace.mapx + selectPlace.mapy,
+      position: { lat: selectPlace.mapx, lng: selectPlace.mapy },
+      buildingName: selectPlace.title,
+      roadAddress: selectPlace.roadAddress,
     }]);
   };
 
@@ -42,8 +43,8 @@ export default function PlaceList({ places }: { places: ClientPlace[] }) {
           .map(place => (
             <li key={place.id} className="border p-2 rounded flex justify-between items-center">
               <div>
-                <h3 className="font-semibold">{place.name}</h3>
-                <p className="text-sm text-gray-600">{place.address}</p>
+                <h3 className="font-semibold">{place.title}</h3>
+                <p className="text-sm text-gray-600">{place.roadAddress}</p>
               </div>
               <button
                 className="bg-color2 text-white p-2 rounded hover:bg-color7"

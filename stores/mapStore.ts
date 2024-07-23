@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 export interface MarkerData {
+  id: string;
   position: {
     lat: number;
     lng: number;

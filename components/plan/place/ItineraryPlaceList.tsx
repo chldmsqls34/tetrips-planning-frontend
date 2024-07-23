@@ -14,10 +14,10 @@ export default function ItineraryPlaceList() {
         {myPlaces.map(place => (
           <li key={place.id} className="border p-4 rounded-xl flex justify-between items-center">
             <div>
-              <h3 className="font-semibold p-2">{place.name}</h3>
+              <h3 className="font-semibold p-2">{place.title}</h3>
             </div>
             <input
-              id={place.playTime}
+              id={place.playTime?.toString()}
               type="number"
               max='12'
               defaultValue='2'
